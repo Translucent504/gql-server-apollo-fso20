@@ -1,2 +1,4 @@
 node_modules
 gql
+.vscode
+__pycache__

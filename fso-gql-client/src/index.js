@@ -8,7 +8,7 @@ import { InMemoryCache, ApolloProvider, ApolloClient, HttpLink } from '@apollo/c
 const client = new ApolloClient({
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: "http://localhost:4000"
+    uri: "http://localhost:4000/"  // for fully replaceable Python backend: "http://127.0.0.1:8000/"
   })
 })
 
