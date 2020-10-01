@@ -1,0 +1,52 @@
+const { ApolloServer, gql } = require('apollo-server')
+
+
+const heroes = [
+{
+    name: "Axe",
+    main_attribute: "Strength",
+    spells: [{name:"Counter Helix",manacost: 0,description: "AXE SPIN"},{name:"Battle Hunger",manacost: 60,description: "AXE SLOW AND DAMG"}]
+}
+]
+
+
+const typeDefs = gql`
+    type Spell {
+        name: String!
+        manacost: [Float!]!
+        description: String!
+    }
+
+    type Hero {
+        main_attribute: String!
+        name: String!
+        spells: [Spell!]!
+
+    }
+
+    type Query {
+        allHeroes: [Hero!]!
+        findHero(name:String!): Hero
+
+    }
+`
+
+
+const resolvers = {
+    
+    Spell: {
+        manacost: root => {
+            console.log(root)
+            return [1,2,3,4].map(i => i*root.manacost)
+        }
+    },
+    
+    Query: {
+    findHero: (root, args) => heroes.find(hero => hero.name === args.name),
+    allHeroes: () => heroes
+    }
+}
+
+const server = new ApolloServer({typeDefs, resolvers})
+
+server.listen().then(({url}) => console.log(url))
